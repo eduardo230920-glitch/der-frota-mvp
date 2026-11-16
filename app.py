@@ -76,6 +76,7 @@ def init_db():
     db.commit()
     db.close()
 
+init_db()
 
 def csrf_token():
     if "_csrf_token" not in session:
@@ -350,5 +351,4 @@ def not_found(_error):
 
 
 if __name__ == "__main__":
-    init_db()
     app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
