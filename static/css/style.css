@@ -1,12 +1,13 @@
 
+
 :root {
     /* Identidade visual DER-DF */
-    --der-blue: #12365a;
-    --der-blue-dark: #0b2742;
-    --der-blue-light: #e8f0f7;
+    --der-blue: #2f6591;
+    --der-blue-dark: #214d73;
+    --der-blue-light: #e8f2fa;
 
     /* Cores gerais */
-    --cor-fundo: #f1f4f8;
+    --cor-fundo: #edf4fa;
     --cor-painel: #ffffff;
     --cor-texto: #293847;
     --cor-texto-secundario: #657586;
