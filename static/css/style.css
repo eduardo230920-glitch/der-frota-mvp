@@ -1,0 +1,31 @@
+:root { --der-blue: #123b63; --der-blue-dark: #0c2c4a; }
+body { background: #f5f7fa; color: #243447; min-height: 100vh; }
+.bg-der { background: var(--der-blue); }
+.navbar-brand { letter-spacing: .1px; }
+h1, h2 { color: #173653; }
+.card { border: 1px solid #e2e8ef; border-radius: 12px; }
+.card-header { border-bottom: 1px solid #e8edf2; border-radius: 12px 12px 0 0 !important; }
+.btn-primary { background: var(--der-blue); border-color: var(--der-blue); }
+.btn-primary:hover, .btn-primary:focus { background: var(--der-blue-dark); border-color: var(--der-blue-dark); }
+.form-control:focus, .form-select:focus, .btn:focus-visible, a:focus-visible { border-color: #2878b9; box-shadow: 0 0 0 .22rem rgba(40,120,185,.22); outline: 2px solid transparent; }
+.metric-card { background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 16px; height: 100%; }
+.metric-card span { display: block; color: #5d6b78; font-size: .9rem; }
+.metric-card strong { display: block; font-size: 2rem; color: #173653; margin-top: 4px; }
+.metric-pending { border-left: 4px solid #d69e18; }
+.metric-progress { border-left: 4px solid #2878b9; }
+.metric-done { border-left: 4px solid #238653; }
+.action-card { display: flex; gap: 14px; align-items: center; background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 18px; color: #173653; text-decoration: none; height: 100%; }
+.action-card:hover { border-color: #8caac4; background: #fbfdff; }
+.action-card small { display: block; color: #657584; margin-top: 3px; }
+.action-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: #eaf1f7; font-size: 1.5rem; }
+.status { display: inline-block; border-radius: 999px; padding: 5px 10px; font-size: .82rem; font-weight: 600; white-space: nowrap; }
+.status-pending { color: #765300; background: #fff2c7; }
+.status-progress { color: #14517d; background: #dceefa; }
+.status-done { color: #17633e; background: #dff3e7; }
+.brand-mark { width: 62px; height: 62px; border-radius: 16px; background: var(--der-blue); color: white; display: grid; place-items: center; font-weight: 800; font-size: 1.35rem; margin: auto; }
+.login-area { min-height: 70vh; }
+.demo-note { background: #f2f6fa; border-radius: 8px; padding: 12px; font-size: .9rem; }
+.description-cell { min-width: 220px; max-width: 360px; }
+table th { color: #536474; font-size: .88rem; white-space: nowrap; }
+footer { background: #fff; }
+@media (max-width: 575px) { .metric-card { padding: 12px; } .metric-card strong { font-size: 1.6rem; } }

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Manutenções | DER-DF{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<div><h1 class="h3 mb-1">Solicitações de manutenção</h1><p class="text-secondary mb-0">Acompanhe e atualize a situação dos serviços.</p></div>
+<a class="btn btn-primary" href="{{ url_for('new_maintenance') }}">+ Nova solicitação</a>
+</div>
+<form class="row g-2 mb-3" method="get">
+<div class="col-md-6"><label class="visually-hidden" for="q">Buscar</label><input class="form-control" id="q" name="q" value="{{ q }}" placeholder="Buscar por placa, modelo ou descrição"></div>
+<div class="col-md-4"><label class="visually-hidden" for="status">Situação</label><select class="form-select" id="status" name="status"><option value="">Todas as situações</option>{% for s in ['Pendente','Em andamento','Concluída'] %}<option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+<div class="col-md-2 d-grid"><button class="btn btn-outline-primary">Filtrar</button></div>
+</form>
+<div class="card"><div class="table-responsive"><table class="table align-middle mb-0">
+<thead><tr><th>Veículo</th><th>Data</th><th>Descrição</th><th>Situação</th><th>Atualizar situação</th></tr></thead>
+<tbody>
+{% for item in maintenances %}
+<tr>
+<td><strong>{{ item.plate }}</strong><div class="small text-secondary">{{ item.model }}</div></td><td>{{ item.request_date }}</td><td class="description-cell">{{ item.description }}</td>
+<td><span class="status status-{{ 'pending' if item.status == 'Pendente' else ('progress' if item.status == 'Em andamento' else 'done') }}">{{ item.status }}</span></td>
+<td><form method="post" action="{{ url_for('update_status', maintenance_id=item.id) }}" class="d-flex gap-1">
+<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+<label class="visually-hidden" for="status-{{ item.id }}">Nova situação</label>
+<select class="form-select form-select-sm" id="status-{{ item.id }}" name="status">{% for s in ['Pendente','Em andamento','Concluída'] %}<option {% if item.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+<button class="btn btn-sm btn-outline-primary">Salvar</button></form></td>
+</tr>
+{% else %}<tr><td colspan="5" class="text-center text-secondary py-4">Nenhuma solicitação encontrada.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

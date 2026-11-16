@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar veículo | DER-DF{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<h1 class="h3 mb-1">Cadastro de veículo</h1><p class="text-secondary mb-4">Preencha os dados de identificação do veículo oficial.</p>
+<form method="post" class="card card-body">
+<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+<div class="row g-3">
+<div class="col-md-6"><label class="form-label" for="plate">Placa *</label><input class="form-control text-uppercase" id="plate" name="plate" maxlength="10" value="{{ vehicle.get('plate','') }}" required></div>
+<div class="col-md-6"><label class="form-label" for="model">Modelo *</label><input class="form-control" id="model" name="model" value="{{ vehicle.get('model','') }}" required></div>
+<div class="col-md-6"><label class="form-label" for="year">Ano *</label><input class="form-control" id="year" name="year" type="number" min="1900" max="2100" value="{{ vehicle.get('year','') }}" required></div>
+<div class="col-md-6"><label class="form-label" for="asset_number">Identificação patrimonial *</label><input class="form-control" id="asset_number" name="asset_number" value="{{ vehicle.get('asset_number','') }}" required></div>
+</div>
+<div class="d-flex gap-2 mt-4"><button class="btn btn-primary">Salvar veículo</button><a class="btn btn-outline-secondary" href="{{ url_for('vehicles') }}">Cancelar</a></div>
+</form></div></div>
+{% endblock %}

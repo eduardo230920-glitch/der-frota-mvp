@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Histórico do veículo | DER-DF{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<div><h1 class="h3 mb-1">Histórico de manutenção</h1><p class="text-secondary mb-0">{{ vehicle.plate }} — {{ vehicle.model }}</p></div>
+<a class="btn btn-primary" href="{{ url_for('new_maintenance') }}">+ Nova solicitação</a>
+</div>
+<div class="card card-body mb-3"><div class="row g-3"><div class="col-6 col-md-3"><small class="text-secondary">Placa</small><div class="fw-semibold">{{ vehicle.plate }}</div></div><div class="col-6 col-md-3"><small class="text-secondary">Ano</small><div class="fw-semibold">{{ vehicle.year }}</div></div><div class="col-12 col-md-6"><small class="text-secondary">Identificação patrimonial</small><div class="fw-semibold">{{ vehicle.asset_number }}</div></div></div></div>
+<div class="card"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Data</th><th>Descrição</th><th>Situação</th></tr></thead><tbody>
+{% for item in history %}<tr><td>{{ item.request_date }}</td><td>{{ item.description }}</td><td><span class="status status-{{ 'pending' if item.status == 'Pendente' else ('progress' if item.status == 'Em andamento' else 'done') }}">{{ item.status }}</span></td></tr>
+{% else %}<tr><td colspan="3" class="text-center text-secondary py-4">Não há manutenções registradas para este veículo.</td></tr>{% endfor %}
+</tbody></table></div></div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('vehicles') }}">Voltar aos veículos</a>
+{% endblock %}

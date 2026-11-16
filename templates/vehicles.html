@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Veículos | DER-DF{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div><h1 class="h3 mb-1">Veículos cadastrados</h1><p class="text-secondary mb-0">Consulte os dados e o histórico de cada veículo.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('new_vehicle') }}">+ Cadastrar veículo</a>
+</div>
+<form class="row g-2 mb-3" method="get">
+  <div class="col-sm-9"><label class="visually-hidden" for="q">Buscar veículo</label><input id="q" name="q" class="form-control" placeholder="Buscar por placa, modelo ou patrimônio" value="{{ q }}"></div>
+  <div class="col-sm-3 d-grid"><button class="btn btn-outline-primary">Pesquisar</button></div>
+</form>
+<div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+<thead><tr><th>Placa</th><th>Modelo</th><th>Ano</th><th>Identificação patrimonial</th><th></th></tr></thead>
+<tbody>
+{% for vehicle in vehicles %}
+<tr><td><strong>{{ vehicle.plate }}</strong></td><td>{{ vehicle.model }}</td><td>{{ vehicle.year }}</td><td>{{ vehicle.asset_number }}</td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('vehicle_detail', vehicle_id=vehicle.id) }}">Histórico</a></td></tr>
+{% else %}<tr><td colspan="5" class="text-center text-secondary py-4">Nenhum veículo encontrado.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

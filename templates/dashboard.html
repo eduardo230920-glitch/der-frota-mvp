@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Painel | DER-DF{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div><h1 class="h3 mb-1">Painel de acompanhamento</h1><p class="text-secondary mb-0">Visão geral dos veículos e das solicitações de manutenção.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('new_maintenance') }}">+ Nova solicitação</a>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg"><div class="metric-card"><span>Veículos</span><strong>{{ counts.vehicles }}</strong></div></div>
+  <div class="col-6 col-lg"><div class="metric-card"><span>Solicitações</span><strong>{{ counts.total }}</strong></div></div>
+  <div class="col-6 col-lg"><div class="metric-card metric-pending"><span>Pendentes</span><strong>{{ counts.pending }}</strong></div></div>
+  <div class="col-6 col-lg"><div class="metric-card metric-progress"><span>Em andamento</span><strong>{{ counts.progress }}</strong></div></div>
+  <div class="col-6 col-lg"><div class="metric-card metric-done"><span>Concluídas</span><strong>{{ counts.done }}</strong></div></div>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-md-6"><a class="action-card" href="{{ url_for('new_vehicle') }}"><span class="action-icon">＋</span><span><strong>Cadastrar veículo</strong><small>Incluir veículo na frota</small></span></a></div>
+  <div class="col-md-6"><a class="action-card" href="{{ url_for('vehicles') }}"><span class="action-icon">⌕</span><span><strong>Consultar veículos</strong><small>Localizar cadastro e histórico</small></span></a></div>
+</div>
+<section class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">Solicitações recentes</h2><a href="{{ url_for('maintenances') }}">Ver todas</a></div>
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead><tr><th>Veículo</th><th>Data</th><th>Descrição</th><th>Situação</th></tr></thead>
+      <tbody>
+      {% for item in recent %}
+        <tr><td><strong>{{ item.plate }}</strong><div class="small text-secondary">{{ item.model }}</div></td><td>{{ item.request_date }}</td><td>{{ item.description }}</td><td><span class="status status-{{ 'pending' if item.status == 'Pendente' else ('progress' if item.status == 'Em andamento' else 'done') }}">{{ item.status }}</span></td></tr>
+      {% else %}
+        <tr><td colspan="4" class="text-center text-secondary py-4">Nenhuma solicitação registrada.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Erro {{ code }} | DER-DF{% endblock %}
+{% block content %}
+<div class="text-center py-5"><h1 class="display-4">{{ code }}</h1><p class="lead">{{ message }}</p><a class="btn btn-primary" href="{{ url_for('dashboard') if session.get('user_id') else url_for('login') }}">Voltar</a></div>
+{% endblock %}
