@@ -51,7 +51,7 @@ h1, h2, h3, h4 {
     background: var(--cor-painel);
     border: 1px solid var(--cor-borda);
     border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(20, 45, 70, .05);
+    box-shadow: 0 5px 16px rgba(20, 45, 70, .09);
 }
 
 .card-header {
@@ -269,4 +269,128 @@ footer {
     .action-card {
         padding: 14px;
     }
+}
+
+/* ==========================================
+   RECURSO DE ACESSIBILIDADE
+   MODO DE ALTO CONTRASTE
+========================================== */
+
+body.high-contrast {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Textos e títulos */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast label,
+body.high-contrast .form-label,
+body.high-contrast .text-secondary,
+body.high-contrast .form-text {
+    color: #ffffff !important;
+}
+
+/* Barra de navegação */
+body.high-contrast .navbar {
+    background: #000000 !important;
+    border-bottom: 2px solid #ffff00;
+}
+
+/* Painéis e cartões */
+body.high-contrast .card,
+body.high-contrast .metric-card,
+body.high-contrast .action-card {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Campos de formulário */
+body.high-contrast .form-control,
+body.high-contrast .form-select {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .form-control::placeholder {
+    color: #ffffff !important;
+    opacity: 1;
+}
+
+body.high-contrast .form-select option {
+    background: #000000;
+    color: #ffffff;
+}
+
+/* Botões */
+body.high-contrast .btn-primary {
+    background: #ffff00 !important;
+    color: #000000 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700;
+}
+
+body.high-contrast .btn-outline-secondary,
+body.high-contrast .btn-outline-primary,
+body.high-contrast .btn-outline-light {
+    background: #000000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700;
+}
+
+/* Links */
+body.high-contrast a {
+    color: #ffff00 !important;
+    text-decoration: underline;
+}
+
+/* Rodapé */
+body.high-contrast footer {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-top: 2px solid #ffffff !important;
+}
+
+/* Alertas */
+body.high-contrast .alert {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffff00 !important;
+}
+
+/* Indicadores de foco para navegação por teclado */
+body.high-contrast input:focus-visible,
+body.high-contrast select:focus-visible,
+body.high-contrast textarea:focus-visible,
+body.high-contrast button:focus-visible,
+body.high-contrast a:focus-visible {
+    outline: 3px solid #ffff00 !important;
+    outline-offset: 3px;
+    box-shadow: none !important;
+}
+
+/* Tabelas */
+body.high-contrast .table,
+body.high-contrast .table th,
+body.high-contrast .table td {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+body.high-contrast .table thead th {
+    background: #000000 !important;
+    color: #ffff00 !important;
+}
+
+/* Seleção de texto */
+body.high-contrast ::selection {
+    background: #ffff00;
+    color: #000000;
 }

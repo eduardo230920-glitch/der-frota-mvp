@@ -1,14 +1,112 @@
+
 {% extends "base.html" %}
+
 {% block title %}Nova manutenção | DER-DF{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center"><div class="col-lg-8">
-<h1 class="h3 mb-1">Registrar solicitação de manutenção</h1><p class="text-secondary mb-4">Vincule a solicitação a um veículo cadastrado.</p>
-{% if not vehicles %}<div class="alert alert-warning">Cadastre pelo menos um veículo antes de registrar uma manutenção. <a href="{{ url_for('new_vehicle') }}">Cadastrar veículo</a>.</div>{% endif %}
-<form method="post" class="card card-body">
-<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-<div class="mb-3"><label class="form-label" for="vehicle_id">Veículo *</label><select class="form-select" id="vehicle_id" name="vehicle_id" required {% if not vehicles %}disabled{% endif %}><option value="">Selecione um veículo</option>{% for v in vehicles %}<option value="{{ v.id }}" {% if form.get('vehicle_id')|string == v.id|string %}selected{% endif %}>{{ v.plate }} — {{ v.model }}</option>{% endfor %}</select></div>
-<div class="mb-3"><label class="form-label" for="description">Descrição do problema *</label><textarea class="form-control" id="description" name="description" rows="4" maxlength="1000" required>{{ form.get('description','') }}</textarea><div class="form-text">Descreva o problema identificado (até 1.000 caracteres).</div></div>
-<div class="mb-3"><label class="form-label" for="request_date">Data da solicitação *</label><input class="form-control" id="request_date" name="request_date" type="date" value="{{ form.get('request_date') }}" required></div>
-<div class="d-flex gap-2 mt-2"><button class="btn btn-primary" {% if not vehicles %}disabled{% endif %}>Salvar solicitação</button><a class="btn btn-outline-secondary" href="{{ url_for('dashboard') }}">Cancelar</a></div>
-</form></div></div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <h1 class="h3 mb-1">Registrar solicitação de manutenção</h1>
+
+        <p class="text-secondary mb-4">
+            Vincule a solicitação a um veículo cadastrado.
+        </p>
+
+        {% if not vehicles %}
+        <div class="alert alert-warning">
+            Cadastre pelo menos um veículo antes de registrar uma manutenção.
+            <a href="{{ url_for('new_vehicle') }}">Cadastrar veículo</a>.
+        </div>
+        {% endif %}
+
+        <form method="post" class="card card-body" id="maintenance-form">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
+            <div class="mb-3">
+                <label class="form-label" for="vehicle_id">
+                    Veículo *
+                </label>
+
+                <select
+                    class="form-select"
+                    id="vehicle_id"
+                    name="vehicle_id"
+                    required
+                    {% if not vehicles %}disabled{% endif %}
+                >
+                    <option value="">Selecione um veículo</option>
+
+                    {% for v in vehicles %}
+                    <option
+                        value="{{ v.id }}"
+                        {% if form.get('vehicle_id')|string == v.id|string %}selected{% endif %}
+                    >
+                        {{ v.plate }} — {{ v.model }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description">
+                    Descrição do problema *
+                </label>
+
+                <textarea
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    rows="4"
+                    maxlength="1000"
+                    required
+                >{{ form.get('description', '') }}</textarea>
+
+                <div class="form-text">
+                    Descreva o problema identificado (até 1.000 caracteres).
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="request_date">
+                    Data da solicitação *
+                </label>
+
+                <input
+                    class="form-control"
+                    id="request_date"
+                    name="request_date"
+                    type="date"
+                    value="{{ form.get('request_date', '') }}"
+                    required
+                >
+            </div>
+
+            <div class="d-flex gap-2 mt-2">
+
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                    {% if not vehicles %}disabled{% endif %}
+                >
+                    Salvar solicitação
+                </button>
+
+                <a
+                    class="btn btn-outline-secondary"
+                    href="{{ url_for('dashboard') }}"
+                >
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 {% endblock %}
+
