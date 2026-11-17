@@ -1,54 +1,210 @@
+
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Gestão de Manutenção da Frota – DER-DF{% endblock %}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Gestão de Manutenção da Frota – DER-DF{% endblock %}</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="{{ url_for('static', filename='css/style.css') }}"
+        rel="stylesheet"
+    >
 </head>
+
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-der">
-  <div class="container">
-    <a class="navbar-brand fw-semibold" href="{{ url_for('dashboard') }}">DER-DF | Gestão de Frota</a>
-    {% if session.get('user_id') %}
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Abrir menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navMain">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Painel</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('vehicles') }}">Veículos</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('maintenances') }}">Manutenções</a></li>
-      </ul>
-      <span class="navbar-text me-3">Olá, {{ session.get('username') }}</span>
-      <form method="post" action="{{ url_for('logout') }}">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-        <button class="btn btn-outline-light btn-sm" type="submit">Sair</button>
-      </form>
+
+    <div class="container">
+
+        <a class="navbar-brand fw-semibold" href="{{ url_for('dashboard') }}">
+            DER-DF | Gestão de Frota
+        </a>
+
+        {% if session.get('user_id') %}
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMain"
+            aria-label="Abrir menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMain">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('dashboard') }}">
+                        Painel
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('vehicles') }}">
+                        Veículos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('maintenances') }}">
+                        Manutenções
+                    </a>
+                </li>
+
+            </ul>
+
+            <button
+                type="button"
+                class="btn btn-outline-light btn-sm me-3 mb-2 mb-lg-0"
+                id="contrastToggle"
+                aria-pressed="false"
+            >
+                Ativar alto contraste
+            </button>
+
+            <span class="navbar-text me-3">
+                Olá, {{ session.get('username') }}
+            </span>
+
+            <form method="post" action="{{ url_for('logout') }}">
+
+                <input
+                    type="hidden"
+                    name="_csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <button class="btn btn-outline-light btn-sm" type="submit">
+                    Sair
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
     </div>
-    {% endif %}
-  </div>
+
 </nav>
 
 <main class="container py-4">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <div aria-live="polite" aria-atomic="true">
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-        </div>
-      {% endfor %}
-      </div>
-    {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div aria-live="polite" aria-atomic="true">
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }} alert-dismissible fade show"
+                        role="alert"
+                    >
+                        {{ message }}
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Fechar"
+                        ></button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
 </main>
+
 <footer class="border-top py-3 mt-5">
-  <div class="container small text-secondary">MVP acadêmico — Gestão de Manutenção da Frota do DER-DF</div>
+
+    <div class="container small text-secondary">
+        MVP acadêmico — Gestão de Manutenção da Frota do DER-DF
+    </div>
+
 </footer>
+
+<span id="contrastStatus" class="visually-hidden" aria-live="polite"></span>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const button = document.getElementById("contrastToggle");
+    const status = document.getElementById("contrastStatus");
+
+    if (!button) {
+        return;
+    }
+
+    const storageKey = "derFrotaHighContrast";
+
+    function applyContrast(enabled) {
+
+        document.body.classList.toggle("high-contrast", enabled);
+
+        button.setAttribute("aria-pressed", String(enabled));
+
+        button.textContent = enabled
+            ? "Desativar alto contraste"
+            : "Ativar alto contraste";
+
+        if (status) {
+            status.textContent = enabled
+                ? "Modo de alto contraste ativado."
+                : "Modo de alto contraste desativado.";
+        }
+    }
+
+    let enabled = false;
+
+    try {
+        enabled = localStorage.getItem(storageKey) === "true";
+    } catch (error) {
+        enabled = false;
+    }
+
+    applyContrast(enabled);
+
+    button.addEventListener("click", function () {
+
+        enabled = !document.body.classList.contains("high-contrast");
+
+        applyContrast(enabled);
+
+        try {
+            localStorage.setItem(storageKey, String(enabled));
+        } catch (error) {
+            // O recurso continua funcionando mesmo sem armazenamento local.
+        }
+
+    });
+
+});
+</script>
+
 </body>
 </html>
+
